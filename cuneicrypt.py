@@ -24,8 +24,24 @@ def encrypt_file(mapping):
         content = plaintext.read()
 
     subbed_content = ''.join(mapping.get(char, char) for char in content)
-    print(subbed_content)
+    
+    with open("encrypted.txt", "w") as enc_text:
+        enc_text.write(subbed_content)
     
     return subbed_content
 
 encrypt_file(mapped_dict)
+
+def decrypt_file(mapping):
+    reverse_mapping = {v: k for k, v in mapping.items()}
+    with open("encrypted.txt", "r") as encrypted_text:
+        content = encrypted_text.read()
+    
+    decrypted_text = ''.join(reverse_mapping.get(char, char) for char in content)
+
+    with open("decrypted.txt", "w") as dec_text:
+        dec_text.write(decrypted_text)
+    
+    return decrypted_text
+
+decrypt_file(mapped_dict)
