@@ -77,12 +77,10 @@ def cuneicrypt_menu():
 
         if key_bool:
             key_file_name = input("Enter the key file name: ").strip()  # Ask for key file name
-            print("Calling Key Function")
             user_key = read_key(key_file_name)  # Read the key from the file
             plaintext_file = input("Enter the file to encrypt: ")
             encrypt_file(mapped_dict, plaintext_file, user_key)  # Encrypt the file with the mapping and key
         else:
-            print("Continuing encryption")
             plaintext_file = input("Enter the file to encrypt: ")
             encrypt_file(mapped_dict, plaintext_file, "")  # Encrypt without key
 
@@ -92,12 +90,10 @@ def cuneicrypt_menu():
 
         if key_bool:
             key_file_name = input("Enter the key file name: ").strip()  # Ask for key file name
-            print("Calling Key Function")
             user_key = read_key(key_file_name)  # Read the key from the file
             encrypted_file = input("Enter the file to decrypt: ")
             decrypt_file(mapped_dict, encrypted_file, user_key)  # Decrypt the file with the mapping and key
         else:
-            print("Continuing decryption")
             encrypted_file = input("Enter the file to decrypt: ")
             decrypt_file(mapped_dict, encrypted_file, "")  # Decrypt without key
     else:
