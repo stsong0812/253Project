@@ -1,28 +1,29 @@
 def read_key(filename):
-    """Read the key from the specified key file."""
+    """Function to read the key obtained from user input"""
     with open(filename, "r") as key_text:
-        content = key_text.read().strip()  # Strip to remove any extra whitespace
-    return content  # Return the key content
+        content = key_text.read().strip()
+    return content
 
 def char_initialization():
-    """Initialize Cuneiform and ASCII character sets."""
+    """Function to initialize both Cuneiform and ASCII characters"""
     cuneiform_chars = [chr(i) for i in range(0x12000, 0x12255)]
     ascii_chars = [chr(i) for i in range(0, 255)]
     return cuneiform_chars, ascii_chars
 
 def char_mapping(cuneiform, ascii):
-    """Create a mapping dictionary from ASCII to Cuneiform."""
+    """Map Cuneiform characters to corresponding ASCII character"""
     mapped_dict = {key: value for key, value in zip(ascii, cuneiform)}
     return mapped_dict
 
 def encrypt_file(mapping, plaintext_file, key):
-    """Encrypt the contents of the specified plaintext file using the provided key."""
+    """Function to encrypt plaintext using provided key and character mapping"""
     with open(plaintext_file, "r") as plaintext:
         content = plaintext.read()
     
     key_length = len(key)
     subbed_content = []
 
+    # Main encryption loop
     for i, char in enumerate(content):
         mapped_char = mapping.get(char, char)  # Map the character
         key_char = key[i % key_length]  # Cycle through the key
@@ -38,7 +39,7 @@ def encrypt_file(mapping, plaintext_file, key):
     return subbed_content_str
 
 def decrypt_file(mapping, encrypted_file, key):
-    """Decrypt the contents of the specified encrypted file using the provided key."""
+    """Function to decrypt Cuneicrypt string obtained from user input file"""
     reverse_mapping = {v: k for k, v in mapping.items()}
     
     with open(encrypted_file, "r") as encrypted_text:
@@ -46,11 +47,12 @@ def decrypt_file(mapping, encrypted_file, key):
     
     decrypted_text = []
     key_length = len(key)
-
+    
+    # Main decryption loop
     for i, char in enumerate(content):
         key_char = key[i % key_length]  # Cycle through the key
         decrypted_char = chr(ord(char) ^ ord(key_char))  # Reverse XOR operation
-        original_char = reverse_mapping.get(decrypted_char, decrypted_char)
+        original_char = reverse_mapping.get(decrypted_char, decrypted_char) # Reverse map
         decrypted_text.append(original_char)
 
     decrypted_text_str = ''.join(decrypted_text)
